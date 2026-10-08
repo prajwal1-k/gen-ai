@@ -15,7 +15,8 @@ OLLAMA_MODEL = os.getenv(
 )
 
 chatbot = VeridionChatbot(
-    model=OLLAMA_MODEL
+    model=OLLAMA_MODEL,
+    timeout=int(os.getenv("OLLAMA_TIMEOUT", "300"))
 )
 
 

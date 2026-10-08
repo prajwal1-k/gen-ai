@@ -6,10 +6,12 @@ class VeridionChatbot:
     def __init__(
             self,
             model: str = "llama3.2",
-            ollama_url: str = "http://localhost:11434"
+            ollama_url: str = "http://localhost:11434",
+            timeout: int = 300
     ):
         self.model = model
         self.ollama_url = ollama_url.strip("/")
+        self.timeout = timeout
         self.system_prompt = """You are Veridion AI, an intelligent AI assistant developed for
 document authenticity, document forensics, tampering detection,
 OCR verification, and AI-assisted document analysis.
@@ -124,7 +126,7 @@ modules.
         }
 
         try:
-            response = requests.post(url, json=payload, timeout=(5, 120))
+            response = requests.post(url, json=payload, timeout=(5, self.timeout))
 
             if response.status_code == 404:
                 error_detail = response.json().get("error", "")
